@@ -1,13 +1,38 @@
 import React, { useState } from "react";
 import "./Home.css";
-const datas = ["Potato", "Mango", "Tomato", "Apple"];
+const datas = ["Milk", "Coffee", "Oranges", "Bread"];
 
 const Home = () => {
   const [inputValue, setInputValue] = useState("");
-  console.log(inputValue);
+  const [render, setRenderr] = useState("");
   const handleInput = (e) => {
     setInputValue(e);
   };
+
+  const randomData = [
+    "Milk",
+    "Coffee",
+    "Mango",
+    "Banana",
+    "Apple",
+    "Orange",
+    "Water",
+    "Bread",
+    "Milk",
+    "Tea",
+    "Tomato",
+    "Potato",
+  ];
+
+  const addItem = () => {
+    const random = Math.random();
+    const randomNumber = Math.ceil(random * randomData.length - 1);
+    const randomITem = randomData[randomNumber];
+    datas.push(randomITem);
+
+    setRenderr(randomITem);
+  };
+
   return (
     <>
       <div className="toddWrap">
@@ -19,13 +44,24 @@ const Home = () => {
             placeholder="Search"
           />
           <hr className="hr" />
-          <i className="fa-solid fa-plus"></i>
+          <i onClick={() => addItem()} className="fa-solid fa-plus"></i>
         </div>
         <hr className="headingBottom" />
         <div className="listItemsWrap">
           <div className="listItem">
-            {datas.map((data) => {
-              return <p key={data}>{data}</p>;
+            {datas.map((data, index) => {
+              if (data.toLowerCase().startsWith(inputValue.toLowerCase())) {
+                if (index === datas.length - 1) {
+                  return (
+                    <p key={index} className="lastItem">
+                      {data}
+                    </p>
+                  );
+                } else {
+                  return <p key={index}>{data}</p>;
+                }
+              }
+              return [];
             })}
           </div>
         </div>
